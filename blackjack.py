@@ -1,9 +1,15 @@
+# Importing modules
+
 import random
 import sys
+
+# Listing all card characteristics
 
 suits = ('Hearts', 'Diamonds', 'Spades', 'Clubs')
 ranks = ('Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Jack', 'Queen', 'King', 'Ace')
 values = {'Two':2, 'Three':3, 'Four':4, 'Five':5, 'Six':6, 'Seven':7, 'Eight':8, 'Nine':9, 'Ten':10, 'Jack':10, 'Queen':10, 'King':10, 'Ace':11}
+
+# Creating classes
 
 class Card:
     
@@ -57,6 +63,10 @@ class Player:
     def __str__(self):
         return f"{self.name} has {len(self.all_cards)} cards"
 
+# Creating functions
+
+# Function to check if a player won
+
 def check_win(player):
     
     sum = 0
@@ -65,12 +75,14 @@ def check_win(player):
         sum += card.value
     
     if sum == 21:
-        print(f"{player.name} ganhou!")
+        print(f"{player.name} won!")
         sys.exit()
     elif sum > 21:
-        print(f"{player.name} deu bust!")
+        print(f"{player.name} busted!")
         sys.exit()
     
+# Function to compare players' hands and tell the result of the match
+
 def compare_hands(player1, dealer):
     
     sum1 = 0
@@ -83,11 +95,13 @@ def compare_hands(player1, dealer):
         sum2 += card.value
     
     if sum1 > sum2:
-        print(f"{player1.name} ganhou!")
+        print(f"{player1.name} won!")
     elif sum2 > sum1:
-        print(f"{dealer.name} ganhou!")
+        print(f"{dealer.name} won!")
     elif sum1 == sum2:
-        print("Ninguém ganhou!")
+        print("No one won!")
+
+# Function to show the player cards to the user
 
 def print_cards(player):
     
@@ -99,9 +113,9 @@ def print_cards(player):
     print("")
 
 
-#Início do lógica do jogo:
+# Start of the game logic:
 
-# Interface - Início
+# Interface
 
 print("")
 
@@ -109,15 +123,15 @@ print("Let's begin the game!")
 
 print("")
 
-# Criando Deck
+# Creating Deck
 
 new_deck = Deck()
 
 new_deck.shuffle()
 
-# Criando player1 e adicionando 2 primeiras cartas
+# Creating player1 and dealing 2 first cards
 
-player1_name = input("Insira seu nome: ")
+player1_name = input("Insert your name: ")
 
 print("")
 
@@ -127,7 +141,7 @@ p1_first_cards = [new_deck.deal(), new_deck.deal()]
 
 player1.add_cards(p1_first_cards)
 
-# Criando dealer e adicionando 2 primeiras cartas
+# Creating dealer and dealing 2 first cards
 
 dealer = Player('Dealer')
 
@@ -135,73 +149,72 @@ d_first_cards = [new_deck.deal(), new_deck.deal()]
 
 dealer.add_cards(d_first_cards)
 
-# Mostrando número e quais cartas o player 1 tem
+# Showing amount and player 1 cards
 
 print_cards(player1)
 
-# Mostrando número e quais cartas o dealer tem
+# Showing amount and dealer 1 cards
 
 print(dealer)
 
 for card in dealer.all_cards:
     if card == dealer.all_cards[-1]:
-        print("Card down")
+        print("Card hidden")
     else:
         print(card)
 
 print("")
 
-# Checando vitória dos dois
+# Checking win of both players
 
 check_win(player1)
 check_win(dealer)
 
-# Definindo variáveis a serem usadas no looping
+# Defining variables to be used on while looping
 
-vez = 1
-escolha = 1
+choice = 1
 
-# Looping do hit ou stay do jogador 1
+# Player 1 hit or stay loop
 
-while escolha == 1:
+while choice == 1:
 
-    print(f"Vez do {player1.name}")
+    print(f"{player1.name}'s turn")
 
     while True:
         try:
-            escolha = int(input("Hit - Pressione 1\nStay - Pressione 2\n=> "))
+            choice = int(input("Hit - Press 1\nStay - Press 2\n=> "))
         except ValueError:
-            print("Pare de ser um mamute e insira um dígito")
+            print("Insert a valid digit")
         else:
             break
 
-    if escolha == 1:
+    if choice == 1:
         player1.add_cards(new_deck.deal())
         print_cards(player1)
 
     check_win(player1)
 
-# Revelando todas as cartas do dealer
+# Revealing all cards of the dealer
 
 print_cards(dealer)
 
-escolha = 1
+choice = 1
 
-# Looping do hit ou stay do dealer
+# Dealer hit or stay loop
 
-while escolha == 1:
+while choice == 1:
 
-    print(f"Vez do {dealer.name}")
+    print(f"{dealer.name}'s turn")
 
     while True:
         try:
-            escolha = int(input("Hit - Pressione 1\nStay - Pressione 2\n=> "))
+            choice = int(input("Hit - Press 1\nStay - Press 2\n=> "))
         except ValueError:
-            print("Pare de ser um mamute e insira um dígito")
+            print("Insert a valid digit")
         else:
             break
 
-    if escolha == 1:
+    if choice == 1:
         dealer.add_cards(new_deck.deal())
         print_cards(dealer)
 
@@ -209,6 +222,4 @@ while escolha == 1:
 
 compare_hands(player1, dealer)
 
-#-----------------------------------------------------------
-# Depois trocar tudo para inglês e postar no github!!
-# Inclusive trocar o tic tac toe para inglês tbmm!!
+# Finish
